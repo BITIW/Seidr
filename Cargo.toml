@@ -1,0 +1,42 @@
+[package]
+name = "ygg-vanity"
+version = "0.1.0"
+edition = "2024"
+
+[workspace]
+members = ["web"]
+resolver = "2"
+
+[features]
+default = ["native"]
+native = []
+wasm = []
+
+[lib]
+name = "ygg_vanity"
+path = "src/lib.rs"
+
+[[bin]]
+name = "ygg-vanity"
+path = "src/main.rs"
+required-features = ["native"]
+
+[dependencies]
+ed25519-dalek = { version = "2.1", features = ["rand_core"] }
+hex = "0.4"
+rand = "0.8"
+rand_chacha = "0.3"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+getrandom = { version = "0.2", features = ["js"] }
+js-sys = "0.3"
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = "symbols"
+
+[profile.wasm-release]
+inherits = "release"
+opt-level = "z"

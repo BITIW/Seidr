@@ -1,0 +1,9 @@
+[package]
+name = "ygg-vanity-web"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+dioxus = { version = "0.7.3", features = ["web"] }
+gloo-timers = { version = "0.3", features = ["futures"] }
+ygg-vanity = { path = "..", default-features = false, features = ["wasm"] }
